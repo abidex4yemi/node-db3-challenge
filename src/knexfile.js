@@ -1,25 +1,44 @@
-// Update with your config settings.
+const path = require('path');
+
+// Get root directory absolute path
+const rootDirectory = path.parse(__dirname).dir;
 
 module.exports = {
-
-  development: {
-    client: 'sqlite3',
-    useNullAsDefault: true, // needed for sqlite
-    connection: {
-      filename: './data/schemes.db3',
-    },
-    migrations: {
-      directory: './data/migrations'
-    },
-    seeds: {
-      directory: './data/seeds'
-    },
-    // add the following
-    pool: {
-      afterCreate: (conn, done) => {
-        // runs after a connection is made to the sqlite engine
-        conn.run('PRAGMA foreign_keys = ON', done); // turn on FK enforcement
-      },
-    },
-  }, 
+	development: {
+		client: 'sqlite3',
+		useNullAsDefault: true,
+		connection: {
+			filename: `${__dirname}/db/sqlite3/schemes.db3`
+		},
+		pool: {
+			afterCreate: (conn, done) => {
+				conn.run('PRAGMA foreign_keys = ON', done);
+			}
+		},
+		migrations: {
+			directory: `${__dirname}/db/migrations`
+		},
+		seeds: {
+			directory: `${__dirname}/db/seeds`
+		}
+	},
+	production: {
+		client: 'sqlite3',
+		useNullAsDefault: true,
+		connection: {
+			filename: `${rootDirectory}/sqlite3/schemes.db3`
+		},
+		pool: {
+			afterCreate: (conn, done) => {
+				conn.run('PRAGMA foreign_keys = ON', done);
+			}
+		},
+		migrations: {
+			directory: `${__dirname}/src/db/migrations`,
+			tableName: 'dbmigrations'
+		},
+		seeds: {
+			directory: `${__dirname}/src/db/seeds`
+		}
+	}
 };
