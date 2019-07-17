@@ -27,7 +27,7 @@ export const addScheme = async (req, res, next) => {
 			return next(
 				createError({
 					status: CONFLICT,
-					message: 'Scheme already exist'
+					message: 'Scheme name already exist'
 				})
 			);
 		}
