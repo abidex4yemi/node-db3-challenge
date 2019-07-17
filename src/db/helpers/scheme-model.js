@@ -34,7 +34,7 @@ export default ({ modelName = '', tableName = '', knex = {} }) => {
 	function addStep(step) {
 		return knex('steps')
 			.insert(step)
-			.then(([id]) => getStepBySchemeId(id));
+			.then(() => getStepBySchemeId(step.scheme_id));
 	}
 
 	function getStepBySchemeId(id) {

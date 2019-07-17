@@ -5,9 +5,10 @@ import {
 	deleteScheme,
 	getSchemeById,
 	getSchemes,
-	getStepBySchemeId
+	getStepBySchemeId,
+	addStep
 } from '../controllers/schemes';
-import { validateSchemeBody, validateSchemeParam } from '../middleware';
+import { validateSchemeBody, validateSchemeParam, validateStepBody } from '../middleware';
 
 const router = express.Router();
 
@@ -24,6 +25,9 @@ router
 	.put(validateSchemeBody, updateScheme)
 	.delete(deleteScheme);
 
-router.route('/schemes/:id/steps').get(getStepBySchemeId);
+router
+	.route('/schemes/:id/steps')
+	.get(getStepBySchemeId)
+	.post(validateStepBody, addStep);
 
 export { router as schemeRouter };
