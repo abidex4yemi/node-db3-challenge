@@ -8,6 +8,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import { allErrorHandler } from './middleware';
 import { OK, createSuccess } from './util';
+import { schemeRouter } from './routes/schemeRouter';
 
 const app = express();
 
@@ -27,6 +28,8 @@ app.get('/', (req, res) => {
 		})
 	);
 });
+
+app.use('/api/v1', [schemeRouter]);
 
 // Handle invalid request
 app.all('*', (req, res) => {
