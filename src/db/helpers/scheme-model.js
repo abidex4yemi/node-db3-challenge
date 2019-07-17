@@ -31,6 +31,21 @@ export default ({ modelName = '', tableName = '', knex = {} }) => {
 			.first();
 	}
 
+	function addStep(step) {
+		return knex('steps')
+			.insert(step)
+			.then(([id]) => getStepBySchemeId(id));
+	}
+
+	function getStepBySchemeId(id) {
+		return knex
+			.select('*')
+			.from('steps')
+			.join('schemes', 'schemes.id', 'steps.scheme_id')
+			.where('scheme_id', id)
+			.orderBy('step_number');
+	}
+
 	function update(id, changes) {
 		return knex(tableName)
 			.where({ id })
@@ -51,6 +66,8 @@ export default ({ modelName = '', tableName = '', knex = {} }) => {
 		getById,
 		update,
 		remove,
-		getAll
+		getAll,
+		getStepBySchemeId,
+		addStep
 	};
 };

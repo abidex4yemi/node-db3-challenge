@@ -1,5 +1,12 @@
 import express from 'express';
-import { addScheme, updateScheme, deleteScheme, getSchemeById, getSchemes } from '../controllers/schemes';
+import {
+	addScheme,
+	updateScheme,
+	deleteScheme,
+	getSchemeById,
+	getSchemes,
+	getStepBySchemeId
+} from '../controllers/schemes';
 import { validateSchemeBody, validateSchemeParam } from '../middleware';
 
 const router = express.Router();
@@ -16,5 +23,7 @@ router
 	.get(getSchemeById)
 	.put(validateSchemeBody, updateScheme)
 	.delete(deleteScheme);
+
+router.route('/schemes/:id/steps').get(getStepBySchemeId);
 
 export { router as schemeRouter };
