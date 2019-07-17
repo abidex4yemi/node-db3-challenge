@@ -1,12 +1,15 @@
 import express from 'express';
-import { addScheme, updateScheme, deleteScheme, getSchemeById } from '../controllers/schemes';
+import { addScheme, updateScheme, deleteScheme, getSchemeById, getSchemes } from '../controllers/schemes';
 import { validateSchemeBody, validateSchemeParam } from '../middleware';
 
 const router = express.Router();
 
 router.param('id', validateSchemeParam);
 
-router.route('/schemes').post(validateSchemeBody, addScheme);
+router
+	.route('/schemes')
+	.get(getSchemes)
+	.post(validateSchemeBody, addScheme);
 
 router
 	.route('/schemes/:id')
